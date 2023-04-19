@@ -10,16 +10,12 @@ words = turtle.Turtle()
 score = 0
 guessed_states = []
 
-
 data = pandas.read_csv('50_states.csv')
 new_data = data.to_dict()
 while score < 50:
     answer = screen.textinput(title=f'{score} / 50', prompt="What's another state? ").title()
     if answer == 'Exit':
-        missing_states = []
-        for state in data['state']:
-            if state not in guessed_states:
-                missing_states.append(state)
+        missing_states = [state for state in data['state'] if state not in guessed_states]
         new_states = pandas.DataFrame(missing_states)
         new_states.to_csv('states_to_learn.csv')
         break
@@ -36,5 +32,3 @@ while score < 50:
 
 if score == 50:
     print("You Win!")
-
-
